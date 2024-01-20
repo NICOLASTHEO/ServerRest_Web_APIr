@@ -1,11 +1,11 @@
-# AUTOMATION-CHALLENGE - Innotech
+# AUTOMATION-CHALLENGE - SOME COMPANY
 
-This is an automation project  for the **AUTOMATION-CHALLENGE - InnoTech** it's with [Robot Framework](https://robotframework.org/), aims to implement the project pattern to Page Objects and test cases written with [Gherkin](https://cucumber.io/docs/gherkin/reference/) and [Procedural], at the beginning of each test there is a information in the Documentation about the methodology to be used.
+This is an automation project  for the **AUTOMATION-CHALLENGE from SOMECOMPANY** it's with [Robot Framework](https://robotframework.org/), aims to implement the project pattern to Page Objects and test cases written with [Gherkin](https://cucumber.io/docs/gherkin/reference/) and [Procedural], at the beginning of each test there is a information in the Documentation about the methodology to be used.
 
 Robot's libraries encapsulate the most used testing tools on the market. Main libraries, to run the GUI tests on Web systems, the selenium library is been used [Selenium](https://www.selenium.dev/); To run GUI tests for API tests, the library of [Python requests](https://github.com/kennethreitz/requests), which provides all the necessary tools for HTTP requests, both for REST and SOAP.
 
 ## This automations is associated to ##
-In jira its associated to the https://github.com/innotechchallenge/automation-challenge, on Github, https://github.com/.
+In jira its associated to the https://github.com/SOMECOMPANY/automation-challenge, on Github, https://github.com/.
 
 ## Project Configuration
 
@@ -40,12 +40,14 @@ In the machine, if you would like to see how all WEB tests are going on, let it 
 
 ## Running in CI ##
 
-Always remember to set browser = Headless, this is the fastest way to run tests and just like that we can make the tests running in the CI/CD environment. 
+Always remember to set browser = Headless, this is the fastest way to run tests and just like that we can make the tests running in the CI/CD environment.
+
+On this repository tests for API are integrated to CI environment on Gitlab: INFORM THE LINK
 
 # How to copy this project into yours #
-Clone to your computer throght Git, the files and scripts on https://github.com/NICOLASTHEO/serverest_tests.
+Clone to your computer throght Git, the files and scripts on https://github.com/NICOLASTHEO/ServerRest_Web_APIr.
 
-## Documentation ##
+# Documentation #
 
 ## Default Steps Definitions ##
 About WEB Testing, The Suite tests the Login Page of SERVEREST: https://front.serverest.dev/login, once a valid Email is already registered.
@@ -65,7 +67,7 @@ For web testing: As a registered User, I want login into my Home page, For that 
 # Project Execution #
 ## How to run ##
 
-To execute the scripts, execute the command below via terminal being inside the project's root directory, and passing as arguments the directory where the reports and execution logs will be inserted and the directory where the test scripts are.
+To execute the scripts, execute the command below via terminal being inside the project's root directory, on folder AUTOMATION-CHALLENGE and passing as arguments the directory where the reports and execution logs will be inserted (results) and the directory where the test scripts are, for web testing (web_testing/tests...), and for APR testing (api_testing/tests...), as bellow:
 
 Web-testing:
 ```sh
@@ -102,5 +104,5 @@ pip install robotframework-requests
 
 # Any questions, can me 👻 : #
 - Theo Nicolas Gomes de Araujo
-## or by email: ##
-- theo.ng.araujo@gmail.com
+## or by LinkedIn: ##
+- https://www.linkedin.com/in/theo-araujo-45553246/
