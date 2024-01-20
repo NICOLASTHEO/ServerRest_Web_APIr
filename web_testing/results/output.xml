@@ -1,0 +1,963 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.11.6 on win32)" generated="20231203 17:43:32.713" rpa="false" schemaversion="4">
+<suite id="s1" name="Serverest Tests" source="C:\Users\corte\OneDrive\Área de Trabalho\IT Proj Theo\robot\Innotech_Robot\serverest_tests\web_testing\tests\serverest_tests.robot">
+<test id="s1-t1" name="Context" line="19">
+<kw name="New Session" library="config" type="SETUP">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:43:32.946" level="INFO">${tags} = ['email_register', 'ExcludeKeyword', 'Login', 'Login_Ok']</msg>
+<status status="PASS" starttime="20231203 17:43:32.946" endtime="20231203 17:43:32.946"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Setup Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" starttime="20231203 17:43:32.946" endtime="20231203 17:43:32.946"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:32.946" endtime="20231203 17:43:32.946"/>
+</kw>
+<kw name="As a registered User, I want login into my Home page, For that I can shopping" library="config">
+<kw name="Generate Random String" library="String">
+<var>${base_aleat}</var>
+<arg>length=5</arg>
+<arg>chars=[LETTERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20231203 17:43:32.962" level="INFO">${base_aleat} = LLVAg</msg>
+<status status="PASS" starttime="20231203 17:43:32.946" endtime="20231203 17:43:32.962"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${email_teste}</arg>
+<arg>${base_aleat}@qa.com.br</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20231203 17:43:32.962" level="INFO">${email_teste} = LLVAg@qa.com.br</msg>
+<status status="PASS" starttime="20231203 17:43:32.962" endtime="20231203 17:43:32.962"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=serve_rest</arg>
+<arg>url=https://serverest.dev</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231203 17:43:32.962" level="INFO">Creating Session using : alias=serve_rest, url=https://serverest.dev, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231203 17:43:32.962" endtime="20231203 17:43:32.962"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${header}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231203 17:43:32.962" level="INFO">${header} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20231203 17:43:32.962" endtime="20231203 17:43:32.962"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${Response}</var>
+<arg>alias=serve_rest</arg>
+<arg>url=/usuarios</arg>
+<arg>expected_status=201</arg>
+<arg>headers=${header}</arg>
+<arg>data={"nome": "Teste da Silva", "email": "${email_teste}", "password": "1234t", "administrador": "true"}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231203 17:43:33.181" level="INFO">POST Request : url=https://serverest.dev/usuarios 
+ path_url=/usuarios 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '100'} 
+ body={"nome": "Teste da Silva", "email": "LLVAg@qa.com.br", "password": "1234t", "administrador": "true"} 
+ </msg>
+<msg timestamp="20231203 17:43:33.181" level="INFO">POST Response : url=https://serverest.dev/usuarios 
+ status=201, reason=Created 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'X-Cloud-Trace-Context': '6f817af531653cbbe439247c042802a3;o=1', 'Date': 'Sun, 03 Dec 2023 22:43:30 GMT', 'Server': 'Google Frontend', 'Content-Length': '82'} 
+ body={
+    "message": "Cadastro realizado com sucesso",
+    "_id": "YuGkGO40Bxfm1nhP"
+} 
+ </msg>
+<msg timestamp="20231203 17:43:33.181" level="INFO">C:\Users\corte\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'serverest.dev'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg timestamp="20231203 17:43:33.181" level="INFO">${Response} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20231203 17:43:32.962" endtime="20231203 17:43:33.181"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${Response.json()} been as random email: ${email_teste}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:43:33.181" level="INFO">{'message': 'Cadastro realizado com sucesso', '_id': 'YuGkGO40Bxfm1nhP'} been as random email: LLVAg@qa.com.br</msg>
+<status status="PASS" starttime="20231203 17:43:33.181" endtime="20231203 17:43:33.181"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:32.946" endtime="20231203 17:43:33.181"/>
+</kw>
+<kw name="End Session" library="config" type="TEARDOWN">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:43:33.181" level="INFO">${tags} = ['email_register', 'ExcludeKeyword', 'Login', 'Login_Ok']</msg>
+<status status="PASS" starttime="20231203 17:43:33.181" endtime="20231203 17:43:33.181"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Teardown Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" starttime="20231203 17:43:33.181" endtime="20231203 17:43:33.181"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:33.181" endtime="20231203 17:43:33.181"/>
+</kw>
+<doc>Certify the user is resgistered before happy path</doc>
+<tag>email_register</tag>
+<tag>ExcludeKeyword</tag>
+<tag>Login</tag>
+<tag>Login_Ok</tag>
+<status status="PASS" starttime="20231203 17:43:32.946" endtime="20231203 17:43:33.181"/>
+</test>
+<test id="s1-t2" name="CT-01 Login Successful" line="23">
+<kw name="New Session" library="config" type="SETUP">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:43:33.187" level="INFO">${tags} = ['Login', 'Login_Ok']</msg>
+<status status="PASS" starttime="20231203 17:43:33.187" endtime="20231203 17:43:33.187"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Setup Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Setup Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Setup</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:43:33.188" level="INFO">Running Test Setup</msg>
+<status status="PASS" starttime="20231203 17:43:33.188" endtime="20231203 17:43:33.188"/>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${url}</arg>
+<arg>browser=${browser_hl}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20231203 17:43:33.188" level="INFO">Opening browser 'Headless Chrome' to base url 'https://front.serverest.dev/login'.</msg>
+<status status="PASS" starttime="20231203 17:43:33.188" endtime="20231203 17:43:35.815"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20231203 17:43:35.815" endtime="20231203 17:43:35.975"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:33.188" endtime="20231203 17:43:35.975"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:33.187" endtime="20231203 17:43:35.975"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:33.187" endtime="20231203 17:43:35.975"/>
+</kw>
+<kw name="Given I access the Login Page" library="serverest_resources">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${logo_serverest_login}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:43:35.977" endtime="20231203 17:43:36.009"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:35.976" endtime="20231203 17:43:36.009"/>
+</kw>
+<kw name="When the form is subimited" library="serverest_resources">
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${form_email}</arg>
+<arg>${email_teste}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20231203 17:43:36.011" level="INFO">Typing text 'LLVAg@qa.com.br' into text field 'email'.</msg>
+<status status="PASS" starttime="20231203 17:43:36.010" endtime="20231203 17:43:36.355"/>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<arg>${form_pw}</arg>
+<arg>${pw}</arg>
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<msg timestamp="20231203 17:43:36.355" level="INFO">Typing password into text field 'password'.</msg>
+<msg timestamp="20231203 17:43:36.392" level="INFO">Temporally setting log level to: NONE</msg>
+<msg timestamp="20231203 17:43:36.428" level="INFO">Log level changed from NONE to INFO.</msg>
+<status status="PASS" starttime="20231203 17:43:36.355" endtime="20231203 17:43:36.428"/>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<arg>${btn_enter}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20231203 17:43:36.428" level="INFO">Clicking button '//button[@data-testid='entrar'][contains(.,'Entrar')]'.</msg>
+<status status="PASS" starttime="20231203 17:43:36.428" endtime="20231203 17:43:36.489"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:36.010" endtime="20231203 17:43:36.489"/>
+</kw>
+<kw name="Then the shopping page is displayed" library="serverest_resources">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${btn_home}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:43:36.491" endtime="20231203 17:43:36.943"/>
+</kw>
+<kw name="Capture Element Screenshot" library="SeleniumLibrary">
+<arg>${btn_home}</arg>
+<doc>Captures a screenshot from the element identified by ``locator`` and embeds it into log file.</doc>
+<msg timestamp="20231203 17:43:37.222" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-element-screenshot-1.png"&gt;&lt;img src="selenium-element-screenshot-1.png" width="400px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20231203 17:43:36.944" endtime="20231203 17:43:37.222"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:36.491" endtime="20231203 17:43:37.222"/>
+</kw>
+<kw name="End Session" library="config" type="TEARDOWN">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:43:37.225" level="INFO">${tags} = ['Login', 'Login_Ok']</msg>
+<status status="PASS" starttime="20231203 17:43:37.225" endtime="20231203 17:43:37.225"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Teardown Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Teardown Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Teardown</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:43:37.226" level="INFO">Running Test Teardown</msg>
+<status status="PASS" starttime="20231203 17:43:37.226" endtime="20231203 17:43:37.226"/>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20231203 17:43:37.619" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20231203 17:43:37.226" endtime="20231203 17:43:37.619"/>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20231203 17:43:37.619" endtime="20231203 17:43:39.821"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:37.226" endtime="20231203 17:43:39.821"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:37.226" endtime="20231203 17:43:39.821"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:37.225" endtime="20231203 17:43:39.821"/>
+</kw>
+<doc>This test certify the correct Login from Serverest's Login page into the Product Page</doc>
+<tag>Login</tag>
+<tag>Login_Ok</tag>
+<status status="PASS" starttime="20231203 17:43:33.181" endtime="20231203 17:43:39.821"/>
+</test>
+<test id="s1-t3" name="CT-02 Invalid Password" line="30">
+<kw name="New Session" library="config" type="SETUP">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:43:39.821" level="INFO">${tags} = ['Login', 'Login_Inv_Passw']</msg>
+<status status="PASS" starttime="20231203 17:43:39.821" endtime="20231203 17:43:39.821"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Setup Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Setup Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Setup</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:43:39.821" level="INFO">Running Test Setup</msg>
+<status status="PASS" starttime="20231203 17:43:39.821" endtime="20231203 17:43:39.821"/>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${url}</arg>
+<arg>browser=${browser_hl}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20231203 17:43:39.821" level="INFO">Opening browser 'Headless Chrome' to base url 'https://front.serverest.dev/login'.</msg>
+<status status="PASS" starttime="20231203 17:43:39.821" endtime="20231203 17:43:42.139"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20231203 17:43:42.139" endtime="20231203 17:43:42.250"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:39.821" endtime="20231203 17:43:42.250"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:39.821" endtime="20231203 17:43:42.250"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:39.821" endtime="20231203 17:43:42.250"/>
+</kw>
+<kw name="Given I access the Login Page" library="serverest_resources">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${logo_serverest_login}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:43:42.251" endtime="20231203 17:43:42.297"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:42.250" endtime="20231203 17:43:42.297"/>
+</kw>
+<kw name="When the form is subimited with an Invalid Password" library="serverest_resources">
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${form_email}</arg>
+<arg>${email_teste}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20231203 17:43:42.298" level="INFO">Typing text 'LLVAg@qa.com.br' into text field 'email'.</msg>
+<status status="PASS" starttime="20231203 17:43:42.298" endtime="20231203 17:43:42.722"/>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<arg>${form_pw}</arg>
+<arg>${wrong_pw}</arg>
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<msg timestamp="20231203 17:43:42.722" level="INFO">Typing password into text field 'password'.</msg>
+<msg timestamp="20231203 17:43:42.764" level="INFO">Temporally setting log level to: NONE</msg>
+<msg timestamp="20231203 17:43:42.816" level="INFO">Log level changed from NONE to INFO.</msg>
+<status status="PASS" starttime="20231203 17:43:42.722" endtime="20231203 17:43:42.816"/>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<arg>${btn_enter}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20231203 17:43:42.816" level="INFO">Clicking button '//button[@data-testid='entrar'][contains(.,'Entrar')]'.</msg>
+<status status="PASS" starttime="20231203 17:43:42.816" endtime="20231203 17:43:42.900"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:42.297" endtime="20231203 17:43:42.900"/>
+</kw>
+<kw name="Then the Alert message &quot;Email e/ou senha inválidos&quot; is displayed" library="serverest_resources" sourcename="Then the Alert message &quot;${email_senha_inv}&quot; is displayed">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>//span[contains(.,'${email_senha_inv}')]</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:43:42.900" endtime="20231203 17:43:43.344"/>
+</kw>
+<kw name="Capture Element Screenshot" library="SeleniumLibrary">
+<arg>//span[contains(.,'${email_senha_inv}')]</arg>
+<doc>Captures a screenshot from the element identified by ``locator`` and embeds it into log file.</doc>
+<msg timestamp="20231203 17:43:43.429" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-element-screenshot-2.png"&gt;&lt;img src="selenium-element-screenshot-2.png" width="400px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20231203 17:43:43.344" endtime="20231203 17:43:43.429"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:42.900" endtime="20231203 17:43:43.429"/>
+</kw>
+<kw name="End Session" library="config" type="TEARDOWN">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:43:43.430" level="INFO">${tags} = ['Login', 'Login_Inv_Passw']</msg>
+<status status="PASS" starttime="20231203 17:43:43.430" endtime="20231203 17:43:43.430"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Teardown Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Teardown Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Teardown</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:43:43.433" level="INFO">Running Test Teardown</msg>
+<status status="PASS" starttime="20231203 17:43:43.433" endtime="20231203 17:43:43.433"/>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20231203 17:43:43.784" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-2.png"&gt;&lt;img src="selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20231203 17:43:43.433" endtime="20231203 17:43:43.784"/>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20231203 17:43:43.784" endtime="20231203 17:43:45.932"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:43.430" endtime="20231203 17:43:45.932"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:43.430" endtime="20231203 17:43:45.932"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:43.430" endtime="20231203 17:43:45.932"/>
+</kw>
+<doc>This test certify that the login can't be done with a registered Email
+but with an invalid Password</doc>
+<tag>Login</tag>
+<tag>Login_Inv_Passw</tag>
+<status status="PASS" starttime="20231203 17:43:39.821" endtime="20231203 17:43:45.932"/>
+</test>
+<test id="s1-t4" name="CT-03 Email Doesn't registered" line="38">
+<kw name="New Session" library="config" type="SETUP">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:43:45.934" level="INFO">${tags} = ['Login', 'Login_Email_Not_Reg']</msg>
+<status status="PASS" starttime="20231203 17:43:45.934" endtime="20231203 17:43:45.934"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Setup Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Setup Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Setup</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:43:45.934" level="INFO">Running Test Setup</msg>
+<status status="PASS" starttime="20231203 17:43:45.934" endtime="20231203 17:43:45.934"/>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${url}</arg>
+<arg>browser=${browser_hl}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20231203 17:43:45.936" level="INFO">Opening browser 'Headless Chrome' to base url 'https://front.serverest.dev/login'.</msg>
+<status status="PASS" starttime="20231203 17:43:45.934" endtime="20231203 17:43:48.556"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20231203 17:43:48.556" endtime="20231203 17:43:48.662"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:45.934" endtime="20231203 17:43:48.662"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:45.934" endtime="20231203 17:43:48.662"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:45.933" endtime="20231203 17:43:48.662"/>
+</kw>
+<kw name="Given I access the Login Page" library="serverest_resources">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${logo_serverest_login}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:43:48.663" endtime="20231203 17:43:48.692"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:48.663" endtime="20231203 17:43:48.692"/>
+</kw>
+<kw name=" When the form is subimited with Email not registered" library="serverest_resources">
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${form_email}</arg>
+<arg>${non_email}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20231203 17:43:48.694" level="INFO">Typing text 'email_nao_regis@gmail.com' into text field 'email'.</msg>
+<status status="PASS" starttime="20231203 17:43:48.693" endtime="20231203 17:43:48.937"/>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<arg>${form_pw}</arg>
+<arg>${pw}</arg>
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<msg timestamp="20231203 17:43:48.940" level="INFO">Typing password into text field 'password'.</msg>
+<msg timestamp="20231203 17:43:48.973" level="INFO">Temporally setting log level to: NONE</msg>
+<msg timestamp="20231203 17:43:49.012" level="INFO">Log level changed from NONE to INFO.</msg>
+<status status="PASS" starttime="20231203 17:43:48.939" endtime="20231203 17:43:49.012"/>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<arg>${btn_enter}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20231203 17:43:49.013" level="INFO">Clicking button '//button[@data-testid='entrar'][contains(.,'Entrar')]'.</msg>
+<status status="PASS" starttime="20231203 17:43:49.013" endtime="20231203 17:43:49.172"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:48.693" endtime="20231203 17:43:49.172"/>
+</kw>
+<kw name="Then the Alert message &quot;Email e/ou senha inválidos&quot; is displayed" library="serverest_resources" sourcename="Then the Alert message &quot;${email_senha_inv}&quot; is displayed">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>//span[contains(.,'${email_senha_inv}')]</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:43:49.173" endtime="20231203 17:43:49.618"/>
+</kw>
+<kw name="Capture Element Screenshot" library="SeleniumLibrary">
+<arg>//span[contains(.,'${email_senha_inv}')]</arg>
+<doc>Captures a screenshot from the element identified by ``locator`` and embeds it into log file.</doc>
+<msg timestamp="20231203 17:43:49.734" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-element-screenshot-3.png"&gt;&lt;img src="selenium-element-screenshot-3.png" width="400px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20231203 17:43:49.618" endtime="20231203 17:43:49.734"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:49.172" endtime="20231203 17:43:49.738"/>
+</kw>
+<kw name="End Session" library="config" type="TEARDOWN">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:43:49.738" level="INFO">${tags} = ['Login', 'Login_Email_Not_Reg']</msg>
+<status status="PASS" starttime="20231203 17:43:49.738" endtime="20231203 17:43:49.738"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Teardown Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Teardown Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Teardown</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:43:49.738" level="INFO">Running Test Teardown</msg>
+<status status="PASS" starttime="20231203 17:43:49.738" endtime="20231203 17:43:49.738"/>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20231203 17:43:50.090" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-3.png"&gt;&lt;img src="selenium-screenshot-3.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20231203 17:43:49.738" endtime="20231203 17:43:50.090"/>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20231203 17:43:50.090" endtime="20231203 17:43:52.260"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:49.738" endtime="20231203 17:43:52.260"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:49.738" endtime="20231203 17:43:52.260"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:49.738" endtime="20231203 17:43:52.260"/>
+</kw>
+<doc>This test certify that the login can't be done without a registered Email</doc>
+<tag>Login</tag>
+<tag>Login_Email_Not_Reg</tag>
+<status status="PASS" starttime="20231203 17:43:45.933" endtime="20231203 17:43:52.260"/>
+</test>
+<test id="s1-t5" name="CT-04 Invalid Email" line="44">
+<kw name="New Session" library="config" type="SETUP">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:43:52.262" level="INFO">${tags} = ['Login', 'Login_Inv_Email']</msg>
+<status status="PASS" starttime="20231203 17:43:52.262" endtime="20231203 17:43:52.262"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Setup Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Setup Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Setup</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:43:52.262" level="INFO">Running Test Setup</msg>
+<status status="PASS" starttime="20231203 17:43:52.262" endtime="20231203 17:43:52.262"/>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${url}</arg>
+<arg>browser=${browser_hl}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20231203 17:43:52.262" level="INFO">Opening browser 'Headless Chrome' to base url 'https://front.serverest.dev/login'.</msg>
+<status status="PASS" starttime="20231203 17:43:52.262" endtime="20231203 17:43:54.888"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20231203 17:43:54.888" endtime="20231203 17:43:55.000"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:52.262" endtime="20231203 17:43:55.000"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:52.262" endtime="20231203 17:43:55.000"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:52.262" endtime="20231203 17:43:55.000"/>
+</kw>
+<kw name="Given I access the Login Page" library="serverest_resources">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${logo_serverest_login}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:43:55.001" endtime="20231203 17:43:55.030"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:55.000" endtime="20231203 17:43:55.030"/>
+</kw>
+<kw name="When I try to subimit the form with an invalid Email" library="serverest_resources">
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${form_email}</arg>
+<arg>${inval_email}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20231203 17:43:55.032" level="INFO">Typing text '123.com' into text field 'email'.</msg>
+<status status="PASS" starttime="20231203 17:43:55.031" endtime="20231203 17:43:55.303"/>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<arg>${form_pw}</arg>
+<arg>${pw}</arg>
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<msg timestamp="20231203 17:43:55.303" level="INFO">Typing password into text field 'password'.</msg>
+<msg timestamp="20231203 17:43:55.332" level="INFO">Temporally setting log level to: NONE</msg>
+<msg timestamp="20231203 17:43:55.368" level="INFO">Log level changed from NONE to INFO.</msg>
+<status status="PASS" starttime="20231203 17:43:55.303" endtime="20231203 17:43:55.369"/>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<arg>${btn_enter}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20231203 17:43:55.370" level="INFO">Clicking button '//button[@data-testid='entrar'][contains(.,'Entrar')]'.</msg>
+<status status="PASS" starttime="20231203 17:43:55.370" endtime="20231203 17:43:55.526"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:55.031" endtime="20231203 17:43:55.526"/>
+</kw>
+<kw name="Then I get an Alert and I should remain in the Login page." library="serverest_resources" sourcename="Then I get an Alert and I should remain in the ${login_info} page.">
+<kw name="Page Should Contain Element" library="SeleniumLibrary">
+<arg>//h1[@class='font-robot'][contains(.,'${login_info}')]</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<msg timestamp="20231203 17:43:55.542" level="INFO">Current page contains element '//h1[@class='font-robot'][contains(.,'Login')]'.</msg>
+<status status="PASS" starttime="20231203 17:43:55.526" endtime="20231203 17:43:55.542"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:55.526" endtime="20231203 17:43:55.542"/>
+</kw>
+<kw name="End Session" library="config" type="TEARDOWN">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:43:55.542" level="INFO">${tags} = ['Login', 'Login_Inv_Email']</msg>
+<status status="PASS" starttime="20231203 17:43:55.542" endtime="20231203 17:43:55.542"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Teardown Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Teardown Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Teardown</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:43:55.542" level="INFO">Running Test Teardown</msg>
+<status status="PASS" starttime="20231203 17:43:55.542" endtime="20231203 17:43:55.542"/>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20231203 17:43:56.041" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-4.png"&gt;&lt;img src="selenium-screenshot-4.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20231203 17:43:55.542" endtime="20231203 17:43:56.041"/>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20231203 17:43:56.041" endtime="20231203 17:43:58.174"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:55.542" endtime="20231203 17:43:58.174"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:55.542" endtime="20231203 17:43:58.174"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:55.542" endtime="20231203 17:43:58.174"/>
+</kw>
+<doc>This test certify that the login can't be done without a registered Email</doc>
+<tag>Login</tag>
+<tag>Login_Inv_Email</tag>
+<status status="PASS" starttime="20231203 17:43:52.260" endtime="20231203 17:43:58.174"/>
+</test>
+<test id="s1-t6" name="CT-05 Login without Password" line="50">
+<kw name="New Session" library="config" type="SETUP">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:43:58.174" level="INFO">${tags} = ['Login', 'Login_WOt_Passw']</msg>
+<status status="PASS" starttime="20231203 17:43:58.174" endtime="20231203 17:43:58.174"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Setup Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Setup Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Setup</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:43:58.174" level="INFO">Running Test Setup</msg>
+<status status="PASS" starttime="20231203 17:43:58.174" endtime="20231203 17:43:58.174"/>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${url}</arg>
+<arg>browser=${browser_hl}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20231203 17:43:58.174" level="INFO">Opening browser 'Headless Chrome' to base url 'https://front.serverest.dev/login'.</msg>
+<status status="PASS" starttime="20231203 17:43:58.174" endtime="20231203 17:44:00.793"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20231203 17:44:00.793" endtime="20231203 17:44:00.903"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:58.174" endtime="20231203 17:44:00.903"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:58.174" endtime="20231203 17:44:00.903"/>
+</kw>
+<status status="PASS" starttime="20231203 17:43:58.174" endtime="20231203 17:44:00.903"/>
+</kw>
+<kw name="Given I access the Login Page" library="serverest_resources">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${logo_serverest_login}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:44:00.905" endtime="20231203 17:44:00.948"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:00.904" endtime="20231203 17:44:00.948"/>
+</kw>
+<kw name="When the form is subimited without a Password" library="serverest_resources">
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${form_email}</arg>
+<arg>${email_teste}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20231203 17:44:00.949" level="INFO">Typing text 'LLVAg@qa.com.br' into text field 'email'.</msg>
+<status status="PASS" starttime="20231203 17:44:00.949" endtime="20231203 17:44:01.116"/>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<arg>${form_pw}</arg>
+<arg>${passw_blank}</arg>
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<msg timestamp="20231203 17:44:01.116" level="INFO">Typing password into text field 'password'.</msg>
+<msg timestamp="20231203 17:44:01.153" level="INFO">Temporally setting log level to: NONE</msg>
+<msg timestamp="20231203 17:44:01.186" level="INFO">Log level changed from NONE to INFO.</msg>
+<status status="PASS" starttime="20231203 17:44:01.116" endtime="20231203 17:44:01.186"/>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<arg>${btn_enter}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20231203 17:44:01.186" level="INFO">Clicking button '//button[@data-testid='entrar'][contains(.,'Entrar')]'.</msg>
+<status status="PASS" starttime="20231203 17:44:01.186" endtime="20231203 17:44:01.336"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:00.949" endtime="20231203 17:44:01.336"/>
+</kw>
+<kw name="Then Blank Password alert message &quot;Password é obrigatório&quot; is displayed" library="serverest_resources" sourcename="Then Blank Password alert message &quot;${passw_blank_alert}&quot; is displayed">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>//span[contains(.,'${passw_blank_alert}')]</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:44:01.337" endtime="20231203 17:44:01.772"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:01.336" endtime="20231203 17:44:01.772"/>
+</kw>
+<kw name="End Session" library="config" type="TEARDOWN">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:44:01.773" level="INFO">${tags} = ['Login', 'Login_WOt_Passw']</msg>
+<status status="PASS" starttime="20231203 17:44:01.772" endtime="20231203 17:44:01.773"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Teardown Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Teardown Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Teardown</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:44:01.773" level="INFO">Running Test Teardown</msg>
+<status status="PASS" starttime="20231203 17:44:01.773" endtime="20231203 17:44:01.773"/>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20231203 17:44:02.108" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-5.png"&gt;&lt;img src="selenium-screenshot-5.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20231203 17:44:01.773" endtime="20231203 17:44:02.108"/>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20231203 17:44:02.108" endtime="20231203 17:44:04.298"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:01.773" endtime="20231203 17:44:04.298"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:01.773" endtime="20231203 17:44:04.298"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:01.772" endtime="20231203 17:44:04.298"/>
+</kw>
+<doc>This test certify that the login can't be done even a valid Email,
+but Without any Password</doc>
+<tag>Login</tag>
+<tag>Login_WOt_Passw</tag>
+<status status="PASS" starttime="20231203 17:43:58.174" endtime="20231203 17:44:04.298"/>
+</test>
+<test id="s1-t7" name="CT-06 Login without Email" line="57">
+<kw name="New Session" library="config" type="SETUP">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:44:04.300" level="INFO">${tags} = ['Login', 'Login_WOt_Email']</msg>
+<status status="PASS" starttime="20231203 17:44:04.300" endtime="20231203 17:44:04.300"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Setup Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Setup Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Setup</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:44:04.300" level="INFO">Running Test Setup</msg>
+<status status="PASS" starttime="20231203 17:44:04.300" endtime="20231203 17:44:04.300"/>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${url}</arg>
+<arg>browser=${browser_hl}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20231203 17:44:04.300" level="INFO">Opening browser 'Headless Chrome' to base url 'https://front.serverest.dev/login'.</msg>
+<status status="PASS" starttime="20231203 17:44:04.300" endtime="20231203 17:44:06.711"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20231203 17:44:06.711" endtime="20231203 17:44:06.830"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:04.300" endtime="20231203 17:44:06.831"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:04.300" endtime="20231203 17:44:06.831"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:04.300" endtime="20231203 17:44:06.831"/>
+</kw>
+<kw name="Given I access the Login Page" library="serverest_resources">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${logo_serverest_login}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:44:06.832" endtime="20231203 17:44:06.865"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:06.831" endtime="20231203 17:44:06.866"/>
+</kw>
+<kw name="When the form is subimited without an Email" library="serverest_resources">
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>${form_email}</arg>
+<arg>${email_blank}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20231203 17:44:06.872" level="INFO">Typing text '' into text field 'email'.</msg>
+<status status="PASS" starttime="20231203 17:44:06.872" endtime="20231203 17:44:06.978"/>
+</kw>
+<kw name="Input Password" library="SeleniumLibrary">
+<arg>${form_pw}</arg>
+<arg>${pw}</arg>
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<msg timestamp="20231203 17:44:06.980" level="INFO">Typing password into text field 'password'.</msg>
+<msg timestamp="20231203 17:44:07.020" level="INFO">Temporally setting log level to: NONE</msg>
+<msg timestamp="20231203 17:44:07.167" level="INFO">Log level changed from NONE to INFO.</msg>
+<status status="PASS" starttime="20231203 17:44:06.980" endtime="20231203 17:44:07.167"/>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<arg>${btn_enter}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20231203 17:44:07.168" level="INFO">Clicking button '//button[@data-testid='entrar'][contains(.,'Entrar')]'.</msg>
+<status status="PASS" starttime="20231203 17:44:07.167" endtime="20231203 17:44:07.221"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:06.870" endtime="20231203 17:44:07.221"/>
+</kw>
+<kw name="Then Blank Email alert message &quot;Email é obrigatório&quot; is displayed" library="serverest_resources">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${email_blank_alert}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:44:07.223" endtime="20231203 17:44:07.659"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:07.221" endtime="20231203 17:44:07.659"/>
+</kw>
+<kw name="End Session" library="config" type="TEARDOWN">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:44:07.660" level="INFO">${tags} = ['Login', 'Login_WOt_Email']</msg>
+<status status="PASS" starttime="20231203 17:44:07.660" endtime="20231203 17:44:07.660"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Teardown Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Teardown Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Teardown</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:44:07.661" level="INFO">Running Test Teardown</msg>
+<status status="PASS" starttime="20231203 17:44:07.661" endtime="20231203 17:44:07.661"/>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20231203 17:44:07.968" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-6.png"&gt;&lt;img src="selenium-screenshot-6.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20231203 17:44:07.661" endtime="20231203 17:44:07.968"/>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20231203 17:44:07.968" endtime="20231203 17:44:10.123"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:07.660" endtime="20231203 17:44:10.123"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:07.660" endtime="20231203 17:44:10.123"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:07.660" endtime="20231203 17:44:10.123"/>
+</kw>
+<doc>This test certify that the login can't be done Without a Email</doc>
+<tag>Login</tag>
+<tag>Login_WOt_Email</tag>
+<status status="PASS" starttime="20231203 17:44:04.300" endtime="20231203 17:44:10.123"/>
+</test>
+<test id="s1-t8" name="CT-07 Login without Password and Email" line="64">
+<kw name="New Session" library="config" type="SETUP">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:44:10.125" level="INFO">${tags} = ['Login', 'Login_WOt_data']</msg>
+<status status="PASS" starttime="20231203 17:44:10.125" endtime="20231203 17:44:10.125"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Setup Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Setup Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Setup</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:44:10.125" level="INFO">Running Test Setup</msg>
+<status status="PASS" starttime="20231203 17:44:10.125" endtime="20231203 17:44:10.125"/>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${url}</arg>
+<arg>browser=${browser_hl}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20231203 17:44:10.125" level="INFO">Opening browser 'Headless Chrome' to base url 'https://front.serverest.dev/login'.</msg>
+<status status="PASS" starttime="20231203 17:44:10.125" endtime="20231203 17:44:12.757"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20231203 17:44:12.757" endtime="20231203 17:44:12.872"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:10.125" endtime="20231203 17:44:12.872"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:10.125" endtime="20231203 17:44:12.872"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:10.125" endtime="20231203 17:44:12.872"/>
+</kw>
+<kw name="Given I access the Login Page" library="serverest_resources">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>${logo_serverest_login}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:44:12.873" endtime="20231203 17:44:12.903"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:12.872" endtime="20231203 17:44:12.904"/>
+</kw>
+<kw name="When the form is subimited without any Email and Password" library="serverest_resources">
+<kw name="Click Button" library="SeleniumLibrary">
+<arg>${btn_enter}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20231203 17:44:12.905" level="INFO">Clicking button '//button[@data-testid='entrar'][contains(.,'Entrar')]'.</msg>
+<status status="PASS" starttime="20231203 17:44:12.904" endtime="20231203 17:44:13.140"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:12.904" endtime="20231203 17:44:13.140"/>
+</kw>
+<kw name="Then Blank Email and Blank Password alert messages &quot;Password é obrigatório&quot; and &quot;Email é obrigatório&quot; are displayed" library="serverest_resources" sourcename="Then Blank Email and Blank Password alert messages &quot;${passw_blank_alert}&quot; and &quot;Email é obrigatório&quot; are displayed">
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>//span[contains(.,'Email é obrigatório')]</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:44:13.140" endtime="20231203 17:44:13.379"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>//span[contains(text(),'${passw_blank_alert}')]</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20231203 17:44:13.379" endtime="20231203 17:44:13.398"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:13.140" endtime="20231203 17:44:13.398"/>
+</kw>
+<kw name="End Session" library="config" type="TEARDOWN">
+<kw name="Set Variable" library="BuiltIn">
+<var>${tags}</var>
+<arg>${TEST_TAGS}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231203 17:44:13.398" level="INFO">${tags} = ['Login', 'Login_WOt_data']</msg>
+<status status="PASS" starttime="20231203 17:44:13.398" endtime="20231203 17:44:13.398"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'ExcludeKeyword' not in ${TEST_TAGS}</arg>
+<arg>Actual Teardown Keyword</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Actual Teardown Keyword" library="config">
+<kw name="Log" library="BuiltIn">
+<arg>Running Test Teardown</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231203 17:44:13.398" level="INFO">Running Test Teardown</msg>
+<status status="PASS" starttime="20231203 17:44:13.398" endtime="20231203 17:44:13.398"/>
+</kw>
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20231203 17:44:13.742" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-7.png"&gt;&lt;img src="selenium-screenshot-7.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20231203 17:44:13.398" endtime="20231203 17:44:13.751"/>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20231203 17:44:13.751" endtime="20231203 17:44:15.873"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:13.398" endtime="20231203 17:44:15.873"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:13.398" endtime="20231203 17:44:15.873"/>
+</kw>
+<status status="PASS" starttime="20231203 17:44:13.398" endtime="20231203 17:44:15.873"/>
+</kw>
+<doc>This test certify that the login can't be done Without any data</doc>
+<tag>Login</tag>
+<tag>Login_WOt_data</tag>
+<status status="PASS" starttime="20231203 17:44:10.124" endtime="20231203 17:44:15.874"/>
+</test>
+<doc>This Suite tests the Login Page of SERVEREST: https://front.serverest.dev/login, once a valid Email is already registered.
+to run this test by comand line:   robot -d results -i Login /tests/serverest_tests.robot</doc>
+<status status="PASS" starttime="20231203 17:43:32.724" endtime="20231203 17:44:15.875"/>
+</suite>
+<statistics>
+<total>
+<stat pass="8" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">email_register</stat>
+<stat pass="1" fail="0" skip="0">ExcludeKeyword</stat>
+<stat pass="8" fail="0" skip="0">Login</stat>
+<stat pass="1" fail="0" skip="0">Login_Email_Not_Reg</stat>
+<stat pass="1" fail="0" skip="0">Login_Inv_Email</stat>
+<stat pass="1" fail="0" skip="0">Login_Inv_Passw</stat>
+<stat pass="2" fail="0" skip="0">Login_Ok</stat>
+<stat pass="1" fail="0" skip="0">Login_WOt_data</stat>
+<stat pass="1" fail="0" skip="0">Login_WOt_Email</stat>
+<stat pass="1" fail="0" skip="0">Login_WOt_Passw</stat>
+</tag>
+<suite>
+<stat pass="8" fail="0" skip="0" id="s1" name="Serverest Tests">Serverest Tests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
